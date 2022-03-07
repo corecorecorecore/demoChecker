@@ -9,3 +9,5 @@ python main.py
 
 proxies in all.txt, it will write to alive.txt
 ```
+
+!! thanks to https://github.com/SparkOfSkill/PythonProxyChecker for the source !!
