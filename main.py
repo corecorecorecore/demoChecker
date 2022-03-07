@@ -28,15 +28,6 @@ def import_proxies(proxiesFile):
     print('[IMPORTED] Proxylist')
     return
 
-def saveActive():
-    print('[SAVING] Active proxies...')
-    alive = open('./'+aliveFile, aliveMode)
-    for proxy in workingProxies:
-        alive.write(proxy['ip'] + ':' + proxy['port']+'\n')
-    alive.close()
-    print('[SAVED] Active proxies in ' + '"' + aliveFile + '".')
-    return
-
 def check_proxy(proxy):
     headers = Headers(headers=True).generate()
     proxies = {'https://': proxyType + '://' + proxy['ip'] + ':' + proxy['port']}
@@ -46,6 +37,10 @@ def check_proxy(proxy):
             if req.status_code <= 400:
                 print('[Alive] ' + proxy['ip'] + ':' + proxy['port'] + ' - ' + str(req.status_code))
                 workingProxies.append(proxy)
+                alive = open('./'+aliveFile, aliveMode)
+                for proxy in workingProxies:
+                    alive.write(proxy['ip'] + ':' + proxy['port']+'\n')
+                alive.close()
             else:
                 print('[Blocked] ' + proxy['ip'] + ':' + proxy['port'] + ' - ' + str(req.status_code))
         except httpx.HTTPError as exc:
@@ -68,4 +63,3 @@ def check_proxyList():
 import_proxies(proxiesFile)
 check_proxyList()
 print('[STATUS] ' + str(len(workingProxies)) + ' proxies from ' + str(len(proxylist)) + ' alive.')
-saveActive()
