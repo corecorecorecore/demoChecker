@@ -1,4 +1,3 @@
-fake_headers
+fake_useragent
 httpx
 httpx[http2]
-httpx[socks]
