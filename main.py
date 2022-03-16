@@ -9,11 +9,11 @@ def xx(PROXY, url):
         try:
             req = client.get('https://1.1.1.1/')
             if req.status_code <= 400:
-                print ('[Valid] ' + PROXY + str(req.status_code))
+                print ('[Valid] ' + PROXY + ' ' + str(req.status_code))
                 with open('valid.txt', 'a') as xX:
                     xX.write(PROXY + '\n')
             else:
-                print('[Blocked] ' + PROXY + str(req.status_code))
+                print('[Blocked] ' + PROXY + ' ' + str(req.status_code))
         except httpx.HTTPError as exc:
             print(exc)
         return True
