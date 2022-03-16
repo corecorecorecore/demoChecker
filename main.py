@@ -11,7 +11,7 @@ def xx(PROXY, url):
             req = client.get('https://1.1.1.1/')
             if req.status_code <= 400:
                 print (Fore.GREEN + '[Valid] ' + PROXY + ' ' + str(req.status_code))
-                with open('valid.txt', 'w') as xX:
+                with open('valid.txt', 'a') as xX:
                     xX.write(PROXY + '\n')
             else:
                 print(Fore.YELLOW + '[Blocked] ' + PROXY + ' ' + str(req.status_code))
