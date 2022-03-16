@@ -20,6 +20,10 @@ def xx(PROXY, url):
         return True
 
 def main():
+    if os.path.exists('valid.txt'):
+        os.remove('valid.txt')
+    else:
+        pass
     try:
         fileproxy = input(' [+] File: ')
     except:
