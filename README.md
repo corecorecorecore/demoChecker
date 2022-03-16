@@ -7,7 +7,5 @@ pip install -r requirements.txt
 
 python main.py
 
-proxies in all.txt, it will write to alive.txt
+proxies in all.txt, it will write to valid.txt
 ```
-
-!! thanks to https://github.com/SparkOfSkill/PythonProxyChecker for the source !!
