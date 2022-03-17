@@ -9,7 +9,7 @@ def xx(PROXY, url):
     headers = {'User-Agent':str(ua.chrome)}
     with httpx.Client(http2=True,headers = headers, proxies=proxies) as client:
         try:
-            req = client.get(domain)
+            req = client.get(url)
             if req.status_code <= 400:
                 print (Fore.GREEN + '[Valid] ' + PROXY + ' ' + str(req.status_code))
                 with open('valid.txt', 'a') as xX:
@@ -36,12 +36,9 @@ def main():
     print('starting threads')
     time.sleep(1)
     for proxy in prox:
-        t = threading.Thread(target=xx, args=(proxy, 'https://1.1.1.1/'))
+        t = threading.Thread(target=xx, args=(proxy, domain))
         thread.append(t)
         t.start()
         time.sleep(0.01)
     print('ending')
-    for i in thread:
-        i.join()
-    print('stopped ' + i + ' threads')
 main()
