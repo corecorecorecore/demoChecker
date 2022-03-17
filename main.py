@@ -3,12 +3,13 @@ from colorama import Fore
 from fake_useragent import UserAgent
 
 ua = UserAgent()
+domain = input('URL(with https://): ')
 def xx(PROXY, url):
     proxies = {'https://': 'http://' + PROXY}
     headers = {'User-Agent':str(ua.chrome)}
     with httpx.Client(http2=True,headers = headers, proxies=proxies) as client:
         try:
-            req = client.get('https://1.1.1.1/')
+            req = client.get(domain)
             if req.status_code <= 400:
                 print (Fore.GREEN + '[Valid] ' + PROXY + ' ' + str(req.status_code))
                 with open('valid.txt', 'a') as xX:
@@ -16,7 +17,7 @@ def xx(PROXY, url):
             else:
                 print(Fore.YELLOW + '[Blocked] ' + PROXY + ' ' + str(req.status_code))
         except httpx.HTTPError as exc:
-            print(Fore.RED + '[Bad] ' + PROXY) 
+            pass
         return True
 
 def main():
@@ -36,9 +37,9 @@ def main():
     time.sleep(1)
     for proxy in prox:
         t = threading.Thread(target=xx, args=(proxy, 'https://1.1.1.1/'))
-        t.start()
         thread.append(t)
-        time.sleep(0.05)
+        t.start()
+        time.sleep(0.01)
     print('ending')
     for i in thread:
         i.join()
