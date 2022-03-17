@@ -41,4 +41,8 @@ def main():
         t.start()
         time.sleep(0.01)
     print('ending')
-main()
+    for i in thread:
+        i.join()
+    print('stopped')
+if __name__ == "__main__":
+    main()
