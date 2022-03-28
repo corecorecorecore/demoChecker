@@ -1,6 +1,5 @@
 import os, httpx, time, random
 from colorama import Fore
-from fake_useragent import UserAgent
 from threading import Thread
 
 uafile = 'uas.txt'
