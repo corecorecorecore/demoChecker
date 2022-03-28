@@ -7,5 +7,5 @@ pip install -r requirements.txt
 
 python checker.py
 
-proxies in all.txt, it will write to http.txt
+it will write to http.txt
 ```
