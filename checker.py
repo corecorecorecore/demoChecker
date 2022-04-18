@@ -1,4 +1,4 @@
-import os, httpx, time, random
+import os, httpx, time, random, ctypes
 from colorama import Fore
 from threading import Thread
 
