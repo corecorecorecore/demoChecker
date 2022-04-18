@@ -19,6 +19,7 @@ def xx(PROXY,url):
             pass
 
 def main():
+    sum = 0
     if os.path.exists('http.txt'):
         os.remove('http.txt')
     else:
@@ -33,6 +34,8 @@ def main():
     print('Starting Threads')
     time.sleep(1)
     for proxy in prox:
+        sum++
+        ctypes.windll.kernel32.SetConsoleTitleW('Proxies:' + sum)
         t = Thread(target=xx, args=(proxy,domain),daemon=True).start()
         time.sleep(0.01)
     print('ending')
