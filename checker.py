@@ -34,7 +34,7 @@ def main():
     print('Starting Threads')
     time.sleep(1)
     for proxy in prox:
-        sum++
+        sum = sum + 1
         ctypes.windll.kernel32.SetConsoleTitleW('Proxies:' + sum)
         t = Thread(target=xx, args=(proxy,domain),daemon=True).start()
         time.sleep(0.01)
