@@ -2,24 +2,26 @@ import os, httpx, time, random, sys, ctypes
 from colorama import Fore
 from threading import Thread
 
-uafile = 'uas.txt'
 domain = 'https://1.1.1.1'
-counter = [0,0,0,0]
+counter = [0,0,0,0,0]
 def xx(PROXY,url):
     try:
-        with httpx.Client(http2=True,headers = {'user-agent':random.choice(list(map(lambda x:x.strip(),open(uafile)))),'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8','accept-encoding': 'gzip, deflate, br','accept-language': 'en'}, proxies={'all://': 'http://' + PROXY},follow_redirects=True) as client:
+        with httpx.Client(http2=True,headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8','accept-encoding': 'gzip, deflate','accept-language': 'en','connection': 'keep-alive','referer': domain,'Upgrade-Insecure-Requests': '1','user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0'}, proxies={'all://': 'http://' + PROXY},follow_redirects=True) as client:
             try:
                 req = client.get(url)
                 if req.status_code <= 300:
                     print (Fore.GREEN + '[Valid] ' + PROXY + ' ' + str(req.status_code))
                     counter[1] = counter[1] + 1
+                    counter[4] = counter[4] + 1
                     with open('http.txt', 'a') as xX:
                         xX.write(PROXY + '\n')
                 else:
                     print(Fore.YELLOW + '[Blocked] ' + PROXY + ' ' + str(req.status_code))
                     counter[2] = counter[2] + 1
+                    counter[4] = counter[4] + 1
             except httpx.HTTPError as exc:
                 counter[3] = counter[3] + 1
+                counter[4] = counter[4] + 1
                 #print(exc)
                 pass
     except:
@@ -42,9 +44,9 @@ def main():
         t = Thread(target=xx, args=(proxy,domain),daemon=True).start()
         counter[0] = counter[0] + 1
         if os.name == 'nt':
-            ctypes.windll.kernel32.SetConsoleTitleW('Proxies: ' + str(counter[0]) + ' | Valid: ' + str(counter[1]) + ' | Blocked: ' + str(counter[2]) + ' | Bad: ' + str(counter[3]))
+            ctypes.windll.kernel32.SetConsoleTitleW('Proxies: ' + str(counter[4]) +'/'+ str(counter[0]) + ' | Valid: ' + str(counter[1]) + ' | Blocked: ' + str(counter[2]) + ' | Bad: ' + str(counter[3]))
         else:
-            sys.stdout.write("\x1b]2;"+'Proxies: ' + str(counter[0]) + ' | Valid: ' + str(counter[1]) + ' | Blocked: ' + str(counter[2]) + ' | Bad: ' + str(counter[3])+"\x07")
+            sys.stdout.write("\x1b]2;"+'Proxies: ' + str(counter[4]) +'/'+ str(counter[0]) + ' | Valid: ' + str(counter[1]) + ' | Blocked: ' + str(counter[2]) + ' | Bad: ' + str(counter[3])+"\x07")
         time.sleep(0.01)
     print('ending')
     time.sleep(60)
